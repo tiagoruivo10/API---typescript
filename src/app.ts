@@ -1,9 +1,12 @@
 import type { FastifyInstance } from "fastify";
 import Fastify from "fastify";
+import { env } from "./config/env.js";
 import routes from "./routes/index.js";
 
 const app: FastifyInstance = Fastify({
-  logger: true,
+  logger: {
+    level: env.NODE_ENV === "dev" ? "info" : "error",
+  },
 });
 
 app.register(routes, { prefix: "/api" });
