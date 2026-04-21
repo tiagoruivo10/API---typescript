@@ -17,8 +17,26 @@ export const createTransactionSchema = z.object({
     message: "Categoria inválida",
   }),
 
-  type: z.nativeEnum(TransactionType, {
-    required_error: "Tipo obrigatório",
-    invalid_type_error: "Tipo inválido",
+  type: z.enum([TransactionType.expense, TransactionType.income], {
+    errorMap: () => ({ message: "Tipo inválido" }),
   }),
 });
+
+export const getTransactionsSchema = z.object({
+  month: z.string().optional(),
+  year: z.string().optional(),
+  type: z
+    .enum([TransactionType.expense, TransactionType.income], {
+      errorMap: () => ({ message: "Tipo inválido" }),
+    })
+    .optional(),
+  categoryId: z
+    .string()
+    .refine(isValidObjectId, {
+      message: "Categoria inválida",
+    })
+    .optional(),
+});
+
+export type CreateTransactionBody = z.infer<typeof createTransactionSchema>;
+export type GetTransactionsQuery = z.infer<typeof getTransactionsSchema>;
