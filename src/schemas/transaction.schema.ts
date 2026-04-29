@@ -43,6 +43,12 @@ export const getTransactionSummarySchema = z.object({
   year: z.string({ message: "o ano é obrigatório" }),
 });
 
+export const getHistoricalTransactionsSchema = z.object({
+  month: z.coerce.number().min(1).max(12),
+  year: z.coerce.number().min(2000).max(2100),
+  months: z.coerce.number().min(1).max(12).optional(),
+});
+
 export const deleteTransactionSchema = z.object({
   id: z.string().refine(isValidObjectId, {
     message: "ID inválido",
@@ -52,4 +58,5 @@ export const deleteTransactionSchema = z.object({
 export type CreateTransactionBody = z.infer<typeof createTransactionSchema>;
 export type GetTransactionsQuery = z.infer<typeof getTransactionsSchema>;
 export type GetTransactionsSummaryQuery = z.infer<typeof getTransactionSummarySchema>;
+export type GetHistoricalTransactionsQuery = z.infer<typeof getHistoricalTransactionsSchema>;
 export type DeleteTransactionParams = z.infer<typeof deleteTransactionSchema>;
