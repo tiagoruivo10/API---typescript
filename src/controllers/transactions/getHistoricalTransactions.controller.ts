@@ -70,5 +70,5 @@ export const getHistoricalTransactions = async (
     });
 
     reply.send({ history: monthlyData });
-  } catch (err) {}
+  } catch {}
 };
