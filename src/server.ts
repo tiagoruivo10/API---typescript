@@ -6,7 +6,7 @@ import { initializeGlobalCategories } from "./services/globalCategories.service.
 
 const PORT = env.PORT;
 
-initializeFirebaseAdmin()
+initializeFirebaseAdmin();
 
 const startServer = async () => {
   try {
@@ -14,7 +14,9 @@ const startServer = async () => {
 
     await initializeGlobalCategories();
 
-    await app.listen({ port: PORT }).then(() => console.log(`Server is running on port ${PORT}`));
+    await app
+      .listen({ port: PORT, host: "0.0.0.0" })
+      .then(() => console.log(`Server is running on port ${PORT}`));
   } catch (err) {
     console.error(err);
   }
